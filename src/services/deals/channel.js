@@ -6,7 +6,7 @@ import * as Deals from "@/services/deals";
 import Data from "@/messages/deals";
 
 const { MessageFlags, PermissionFlagsBits } = Discord;
-const { ViewChannel, SendMessages, EmbedLinks } = PermissionFlagsBits;
+const { ViewChannel, SendMessages, SendMessagesInThreads, EmbedLinks } = PermissionFlagsBits;
 
 const STORES = { epic: "Epic Games", steam: "Steam" };
 
@@ -19,17 +19,20 @@ const selection = (row) =>
     .join(", ");
 
 const register = async (interaction) => {
-  const { options, guild, guildId } = interaction;
-  const channel = options.getChannel("channel", true);
+  const { options, guild, guildId, client } = interaction;
+  const selected = options.getChannel("channel", true);
   const role = options.getRole("role");
   const epic = options.getBoolean("epic") ?? true;
   const steam = options.getBoolean("steam") ?? true;
 
   if (!epic && !steam) return interaction.reply(ephemeral(Data.nothing));
 
-  const permissions = channel.permissionsFor(guild.members.me);
-  if (!permissions?.has([ViewChannel, SendMessages, EmbedLinks])) {
-    return interaction.reply(ephemeral(Strings.inject(Data.forbidden, { channel: `${channel}` })));
+  // The option only holds partial data, and fetching fails on private threads the bot has not joined
+  const channel = await client.channels.fetch(selected.id).catch(() => null);
+  const send = channel?.isThread() ? SendMessagesInThreads : SendMessages;
+  const permissions = channel?.permissionsFor(guild.members.me);
+  if (!permissions?.has([ViewChannel, send, EmbedLinks])) {
+    return interaction.reply(ephemeral(Strings.inject(Data.forbidden, { channel: `<#${selected.id}>` })));
   }
 
   await Channels.register({ id: channel.id, guild: guildId, role: role?.id, epic, steam });

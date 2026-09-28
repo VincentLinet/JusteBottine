@@ -3,14 +3,14 @@ import * as Discord from "discord.js";
 import * as Channel from "@/services/deals/channel";
 
 const { ChannelType, PermissionFlagsBits, InteractionContextType } = Discord;
-const { GuildText, GuildAnnouncement } = ChannelType;
+const { GuildText, GuildAnnouncement, PublicThread, PrivateThread, AnnouncementThread } = ChannelType;
 
 const channel = (required) => (option) =>
   option
     .setName("channel")
-    .setDescription("Le salon dans lequel les jeux gratuits sont publiés")
+    .setDescription("Le salon ou le fil dans lequel les jeux gratuits sont publiés")
     .setRequired(required)
-    .addChannelTypes(GuildText, GuildAnnouncement);
+    .addChannelTypes(GuildText, GuildAnnouncement, PublicThread, PrivateThread, AnnouncementThread);
 
 const data = new Discord.SlashCommandBuilder()
   .setName("deals")

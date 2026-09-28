@@ -91,6 +91,10 @@ Discord bot posting free-to-keep games from the Epic Games Store and Steam. The 
   overlapping runs; `/deals check` calls `dispatch` for its guild only and bypasses that flag.
 - A deal is saved only after the message is sent: a crash between the two means a repost, never a silent miss.
 - Role mentions are part of the deal message (`content` + `allowedMentions`), unlike DEH which sent then deleted a ping.
+- A registered "channel" can be a thread (public, private, announcement, forum post). Threads need
+  `SendMessagesInThreads` instead of `SendMessages`; `/deals register` fetches the channel first because the option
+  only carries partial data, and the fetch fails on private threads the bot was not added to. Posting un-archives an
+  archived thread, but fails on a locked one.
 
 ## Deployment
 

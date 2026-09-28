@@ -3,10 +3,10 @@ import * as Discord from "discord.js";
 import * as Schema from "@/models/schema";
 
 const { PermissionsBitField, PermissionFlagsBits, OAuth2Scopes } = Discord;
-const { ViewChannel, SendMessages, EmbedLinks, MentionEveryone } = PermissionFlagsBits;
+const { ViewChannel, SendMessages, SendMessagesInThreads, EmbedLinks, MentionEveryone } = PermissionFlagsBits;
 
 // MentionEveryone lets the bot ping roles that are not set as mentionable
-const permissions = new PermissionsBitField([ViewChannel, SendMessages, EmbedLinks, MentionEveryone]);
+const permissions = new PermissionsBitField([ViewChannel, SendMessages, SendMessagesInThreads, EmbedLinks, MentionEveryone]);
 
 export const database = async () => {
   await Schema.create();

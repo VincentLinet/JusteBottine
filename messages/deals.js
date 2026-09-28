@@ -9,7 +9,7 @@ export default {
   registered: "Les jeux gratuits seront désormais publiés dans %channel (%list).",
   unregistered: "Les jeux gratuits ne seront plus publiés dans %channel.",
   unknown: "%channel ne reçoit pas les jeux gratuits.",
-  forbidden: "J'ai besoin des permissions pour voir le salon, envoyer des messages et intégrer des liens dans %channel.",
+  forbidden: "J'ai besoin des permissions pour voir le salon, envoyer des messages et intégrer des liens dans %channel. Pour un fil privé, ajoute-moi d'abord au fil en me mentionnant.",
   nothing: "Choisis au moins une boutique.",
   empty: "Aucun salon ne reçoit les jeux gratuits sur ce serveur.",
   list: "Salons recevant les jeux gratuits :",
