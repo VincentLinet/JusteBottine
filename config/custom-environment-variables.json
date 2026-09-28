@@ -1,0 +1,11 @@
+{
+  "databases": {
+    "default": {
+      "host": "DB_HOST",
+      "user": "DB_USER",
+      "password": "DB_PASS",
+      "database": "DB_BASE",
+      "port": "DB_PORT"
+    }
+  }
+}

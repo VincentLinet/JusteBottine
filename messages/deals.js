@@ -1,0 +1,21 @@
+export default {
+  announce: "**Attention !** %title est **GRATUIT** sur %store pour une durée limitée !",
+  price: "Prix",
+  free: "GRATUIT",
+  until: "Jusqu'au",
+  soon: "Durée limitée",
+  genres: "Genres",
+  claim: "Récupérer gratuitement",
+  registered: "Les jeux gratuits seront désormais publiés dans %channel (%list).",
+  unregistered: "Les jeux gratuits ne seront plus publiés dans %channel.",
+  unknown: "%channel ne reçoit pas les jeux gratuits.",
+  forbidden: "J'ai besoin des permissions pour voir le salon, envoyer des messages et intégrer des liens dans %channel.",
+  nothing: "Choisis au moins une boutique.",
+  empty: "Aucun salon ne reçoit les jeux gratuits sur ce serveur.",
+  list: "Salons recevant les jeux gratuits :",
+  checked: "%count nouvelle(s) offre(s) publiée(s).",
+  uptodate: "Aucune nouvelle offre, tout est à jour.",
+  kinds: { game: "Jeu", dlc: "DLC", addon: "Extension", bundle: "Pack", edition: "Édition" },
+  months: ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
+  deadline: "%day %month à %time"
+};

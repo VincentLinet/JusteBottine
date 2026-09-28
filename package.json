@@ -1,0 +1,28 @@
+{
+  "name": "justebottine",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon dist/main.cjs",
+    "build": "node esbuild.config.js",
+    "dev": "NODE_ENV=development yarn build & yarn start",
+    "lint": "eslint src messages config"
+  },
+  "dependencies": {
+    "config": "^4.2.0",
+    "discord.js": "^14.26.2",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.28.0",
+    "esbuild-plugin-alias": "^0.2.1",
+    "mysql": "^2.18.1",
+    "node-cron": "^4.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.7.0",
+    "eslint": "^9.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "nodemon": "^3.1.14"
+  },
+  "packageManager": "yarn@4.14.1"
+}

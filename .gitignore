@@ -1,0 +1,7 @@
+.env
+.local
+.yarn/*
+!.yarn/releases
+.pnp.*
+node_modules
+dist
