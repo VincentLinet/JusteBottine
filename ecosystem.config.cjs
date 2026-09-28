@@ -18,7 +18,6 @@ module.exports = {
 
   deploy: {
     production: {
-      // SSH alias: the real host and user are defined in ~/.ssh/config, see README
       host: "justebottine",
       ref: "origin/main",
       repo: "git@github.com:VincentLinet/JusteBottine.git",

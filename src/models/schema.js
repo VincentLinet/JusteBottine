@@ -26,7 +26,6 @@ const deal = () =>
       CONSTRAINT deal_channel_fk FOREIGN KEY (channel) REFERENCES channel (id) ON DELETE CASCADE
     );`.execute();
 
-// Order matters, deal references channel
 export const create = async () => {
   await channel();
   await deal();

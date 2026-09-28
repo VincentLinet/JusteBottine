@@ -27,7 +27,6 @@ const register = async (interaction) => {
 
   if (!epic && !steam) return interaction.reply(ephemeral(Data.nothing));
 
-  // The option only holds partial data, and fetching fails on private threads the bot has not joined
   const channel = await client.channels.fetch(selected.id).catch(() => null);
   const send = channel?.isThread() ? SendMessagesInThreads : SendMessages;
   const permissions = channel?.permissionsFor(guild.members.me);

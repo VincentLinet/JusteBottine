@@ -13,7 +13,7 @@ const typeCast = (field, next) => {
     try {
       return JSON.parse(field.string());
     } catch {
-      // Not valid JSON, let mysql parse it
+      return next();
     }
   }
   return next();

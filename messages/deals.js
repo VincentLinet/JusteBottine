@@ -5,6 +5,7 @@ export default {
   until: "Jusqu'au",
   soon: "Durée limitée",
   genres: "Genres",
+  rating: "Note Steam",
   claim: "Récupérer gratuitement",
   registered: "Les jeux gratuits seront désormais publiés dans %channel (%list).",
   unregistered: "Les jeux gratuits ne seront plus publiés dans %channel.",

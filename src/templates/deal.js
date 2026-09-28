@@ -22,7 +22,7 @@ const limit = ({ until, deadline }) => {
 };
 
 export const message = (deal, role) => {
-  const { store, title, description, url, image, price, tags = [], kind } = deal;
+  const { store, title, description, url, image, price, tags = [], kind, rating = null } = deal;
   const { name, color } = STORES[store];
 
   const announce = Strings.inject(Data.announce, { title, store: name });
@@ -31,6 +31,7 @@ export const message = (deal, role) => {
     { name: Data.price, value: `~~${price}~~ → **${Data.free}**`, inline: true },
     { name: Data.until, value: limit(deal), inline: true }
   ];
+  if (rating !== null) fields.push({ name: Data.rating, value: `${rating} %`, inline: true });
   if (tags.length > 0) fields.push({ name: Data.genres, value: tags.map((tag) => `\`${tag}\``).join(" "), inline: false });
 
   const claim = new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel(Data.claim).setURL(url);

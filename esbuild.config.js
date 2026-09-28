@@ -44,7 +44,6 @@ const ctx = await context({
     "@/services": path.resolve(__dirname, "src/services"),
     "@/templates": path.resolve(__dirname, "src/templates")
   },
-  // node-cron relies on import.meta, which does not survive the cjs bundling
   external: ["node-cron"],
   plugins: [log]
 });

@@ -3,6 +3,7 @@ import config from "config";
 import * as Http from "@/libs/http";
 import * as Time from "@/libs/time";
 import * as Strings from "@/services/strings";
+import * as Rating from "./rating";
 import Data from "@/messages/deals";
 
 const { deals } = config;
@@ -13,16 +14,13 @@ const SEARCH = "https://store.steampowered.com/search/results/";
 const DETAILS = "https://store.steampowered.com/api/appdetails";
 const APP = "https://store.steampowered.com/app";
 
-// Only single apps: packages list several ids ("1,2") and are ignored
 const APPID = /data-ds-appid="(\d+)"/g;
 const EXPIRY = /Free to keep when you get it before ([^.<]+)\./;
 const { kinds, months } = Data;
 const KINDS = { game: kinds.game, dlc: kinds.dlc };
 const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-// "29 Sep @ 3:00pm" or "Sep 29 @ 3:00pm"
 const DEADLINE = /^(?:(\d{1,2}) ([a-z]{3})|([a-z]{3}) (\d{1,2})),? @ (\d{1,2}):(\d{2})(am|pm)$/i;
 
-// Skips the age gate of mature games
 const cookies = { Cookie: "birthtime=0; lastagecheckage=1-0-1990; wants_mature_content=1" };
 
 const search = async () => {
@@ -37,7 +35,6 @@ const details = async (id) => {
   return result?.success ? result.data : null;
 };
 
-// Steam only gives the deadline as English text, reformatted to French when recognised
 const localize = (text) => {
   const match = text.match(DEADLINE);
   if (!match) return text;
@@ -52,7 +49,6 @@ const localize = (text) => {
   return Strings.inject(Data.deadline, { day: dayFirst || daySecond, month: months[month], time });
 };
 
-// Steam does not expose the end of the giveaway anywhere else than on the store page
 const expiry = async (id) => {
   try {
     const html = await Http.text(`${APP}/${id}/?cc=${country}&l=english`, { headers: cookies });
@@ -79,7 +75,8 @@ const format = async (app) => {
     until: null,
     deadline: await expiry(id),
     tags: genres.map(({ description }) => description),
-    kind: KINDS[type] || kinds.game
+    kind: KINDS[type] || kinds.game,
+    rating: await Rating.steam(id)
   };
 };
 
@@ -87,7 +84,6 @@ export const list = async () => {
   const ids = await search();
   const games = [];
 
-  // Sequential on purpose, the appdetails endpoint is heavily rate limited
   for (const id of ids) {
     const app = await details(id);
     if (free(app)) games.push(await format(app));

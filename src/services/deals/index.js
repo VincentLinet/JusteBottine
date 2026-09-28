@@ -7,6 +7,7 @@ import * as Deals from "@/models/deal";
 import * as Template from "@/templates/deal";
 import * as Epic from "./epic";
 import * as Steam from "./steam";
+import * as Rating from "./rating";
 
 const { deals } = config;
 const { schedule: expression, timezone, cooldown } = deals;
@@ -18,7 +19,8 @@ let running = false;
 const collect = async () => {
   const fetcher = async ([store, service]) => {
     try {
-      return [store, await service.list()];
+      const games = await service.list();
+      return [store, games.filter(Rating.passes)];
     } catch (error) {
       Errors.error(`Unable to fetch ${store} deals: ${error.message}`);
       return [store, []];

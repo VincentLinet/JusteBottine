@@ -1,15 +1,3 @@
-/* PROPS
- ** Color:       HEX
- ** Title:       String
- ** Image:       String
- ** URL:         String
- ** Description: String
- ** Thumbnail:   String
- ** Footer       Object { String text, String icon_url }
- ** Author:      Object { String name, String icon_url, String url }
- ** Fields:      Array [ { String name, String value, Boolean inline } ]
- */
-
 const CUSTOM_EMOJI_REGEX = /^<a?:\w+:\d+>+$/;
 const UNICODE_EMOJI_REGEX = /^[\p{Extended_Pictographic}\u200d]+$/u;
 const MAXIMUM = 1024;

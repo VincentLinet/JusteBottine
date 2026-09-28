@@ -11,12 +11,15 @@ export default {
   deals: {
     schedule: "0 * * * *",
     timezone: "Europe/Paris",
-    // Days before the same product can be announced again in a channel
     cooldown: 30,
     country: "FR",
     locale: "fr",
     steam: {
       types: ["game", "dlc"]
+    },
+    rating: {
+      minimum: 75,
+      unrated: false
     }
   }
 };

@@ -28,6 +28,7 @@ Discord bot posting free-to-keep games from the Epic Games Store and Steam. The 
 
 ## Conventions (inherited from hamingja)
 
+- **No comments in the code** (the owner's choice): explanations belong in this file.
 - Namespace imports everywhere (`import * as Deals from "@/services/deals"`), double quotes, `printWidth` 120, no trailing
   commas (`.prettierrc`).
 - Every command/event is a default export (`{ data, execute }` / `{ name, kind, execute }`) re-exported from the
@@ -82,6 +83,18 @@ Discord bot posting free-to-keep games from the Epic Games Store and Steam. The 
   rewrites it to French (`29 sept. à 15h00`); unknown formats are posted as-is. Age-gated games need the cookies in
   `cookies`. Steam deals therefore have `until: null` and a text `deadline`.
 - Allowed item types are in `config.deals.steam.types` (`game`, `dlc`).
+
+### Rating filter (`src/services/deals/rating.js`)
+
+- Only games rated at least `config.deals.rating.minimum` (75) are announced; games without a rating are skipped unless
+  `config.deals.rating.unrated` is true. The filter runs in `collect()` (`src/services/deals/index.js`).
+- SteamDB has no public API and blocks scraping, so its formula is reproduced from Steam's own review counts
+  (`appreviews/{id}?json=1&language=all&purchase_type=all`): `average - (average - 0.5) * 2^(-log10(total + 1))`,
+  see https://steamdb.info/blog/steamdb-rating/. It pulls small review counts towards 50% (3/3 positive = 67).
+- Epic exposes no ratings: `lookup()` searches the Epic title on Steam (`api/storesearch`) and only accepts an exact match
+  after normalisation (lowercase, accents and punctuation removed). No match = unrated = skipped by default.
+- Rating lookups fail soft (`null`), a Steam outage therefore skips games instead of crashing the run.
+- Games filtered out are not stored, so they are re-evaluated on every run and posted once their rating passes.
 
 ## Deduplication and scheduling
 
